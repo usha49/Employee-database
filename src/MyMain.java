@@ -1,9 +1,18 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class main{
+public class MyMain{
     private static ArrayList<Employee> employees = new ArrayList <>();
-    private static Scanner input = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static Employee findEmployeeById(int id){
+        for (Employee emp : employees) {
+            if (emp.getEmpId() == id){
+                return emp;
+            }
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Management System");
@@ -15,7 +24,7 @@ public class main{
 
             switch (choice){
                 case 1:
-                    getAllEmployess();
+                    getAllEmployees();
                     break;
                 case 2:
                     addEmployee();
@@ -62,7 +71,7 @@ public class main{
         int id  = scanner.nextInt();
         scanner.nextLine();
 
-        // checking whether alredy exists
+        // checking whether already exists
         if (findEmployeeById(id) != null){
             System.out.println("Employee already exists");
             return;
@@ -77,8 +86,8 @@ public class main{
         System.out.print("Enter Employee Phone Number: ");
         String phone = scanner.nextLine();
 
-        System.out.print("Enter Employee Position");
-        String phone = scanner.nextLine();
+        System.out.print("Enter Employee Position: ");
+        String position = scanner.nextLine();
 
         Employee newEmployee = new Employee (id, name, address, phone, position);
         employees.add(newEmployee);
@@ -149,23 +158,8 @@ public class main{
             return;
         }
         System.out.println("Employee to delete:" + emp);
-        System.out.println("Are you sure you want to delete this employee?(y/n):");
-        System confirm = scanner.nextLine();
-
-        if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-            employees.remove(emp);
-            System.out.println("Employee deleted successfully");
-        } else {
-            System.out.println("Delete operation cancelled");
+        employees.remove(emp);
+        System.out.println("Employee deleted successfully");
         }
     }
 
-    private static Employee findEmployeeById)(int id){
-        for (Employee emp : employees) {
-            if (emp.getEmpId() = id){
-                return emp;
-            }
-        }
-        return null;
-    }
-}
