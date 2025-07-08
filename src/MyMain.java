@@ -16,7 +16,7 @@ public class MyMain{
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Management System");
-        System.out.println("-----------------------------------------");
+        System.out.println("----------------------------------------");
 
         while (true){
             showMenu();
@@ -37,7 +37,7 @@ public class MyMain{
                     deleteEmployee();
                     break;
                 case 5:
-                    System.out.println("Thank you for using our Employee Management System");
+                    System.out.println("Thank you for using our Employee Management System.");
                     return;
                 default:
                     System.out.println("Invalid choice, Please try again.");
@@ -46,20 +46,22 @@ public class MyMain{
     }
 
     public static void showMenu(){
+        System.out.println("What is the operation you want to perform?");
         System.out.println("1. Get All Employee Details");
         System.out.println("2. Add Employee Details");
         System.out.println("3. Update Employee Details");
         System.out.println("4. Delete Employee");
         System.out.println("5. Exit");
         System.out.println("Enter your choice (1-5): ");
-        System.out.println("--------------------------------");
+        System.out.println("---------------------------");
     }
 
     public static void getAllEmployees(){
         System.out.println("----All Employees----");
         System.out.println("-----------------------");
         if (employees.isEmpty()) {
-            System.out.println("There are no employees available");
+            System.out.println("There are no employees available.");
+            System.out.println("----------------------------------");
         } else {
             for (Employee emp : employees){
                 System.out.println(emp);
@@ -71,14 +73,17 @@ public class MyMain{
         System.out.println("----Add Employee----");
 
         while (true) {
-            System.out.print("Enter Employee Id: ");
-            int id  = scanner.nextInt();
-            scanner.nextLine();
+            int id;
+            while (true){
+                System.out.print("Enter Employee Id: ");
+                id  = scanner.nextInt();
+                scanner.nextLine();
 
-            // checking whether already exists
-            if (findEmployeeById(id) != null){
-                System.out.println("Employee already exists");
-                return;
+                // checking whether already exists
+                if (findEmployeeById(id) == null){
+                    break;
+                }
+                System.out.println("Employee already exists. Please try again.");
             }
 
             System.out.print("Enter Employee Name: ");
@@ -96,16 +101,22 @@ public class MyMain{
             Employee newEmployee = new Employee (id, name, address, phone, position);
             employees.add(newEmployee);
 
-            System.out.println("Employee added successfully");
-            System.out.println("Do you want to add another employee? (y/n): ");
-            String confirm = scanner.nextLine();
-            if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")){
-                return;
-            } else if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")){
-                break;
-            } else {
-                System.out.println("Invalid input, please try again.");
+            System.out.println("Employee added successfully.");
+            System.out.println("------------------------------");
+
+            while(true) {
+                System.out.println("Do you want to add another employee? (y/n): ");
+                String confirm = scanner.nextLine();
+                if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")){
+                    return;
+                } else if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")){
+                    System.out.println("Then you can add new employee.");
+                    break;
+                } else {
+                    System.out.println("Invalid input, please try again.");
+                }
             }
+
         }
 
     }
@@ -126,12 +137,12 @@ public class MyMain{
         System.out.println("Current details:");
         System.out.println(emp);
 
-        System.out.print("\nWhat would you like to update?");
-        System.out.print("1. Name ");
-        System.out.print("2. Address ");
-        System.out.print("3. Phone Number ");
-        System.out.print("4. Position ");
-        System.out.print("Enter your choice.");
+        System.out.println("What would you like to update?");
+        System.out.println("1. Name ");
+        System.out.println("2. Address ");
+        System.out.println("3. Phone Number ");
+        System.out.println("4. Position ");
+        System.out.println("Enter your choice.");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -157,7 +168,7 @@ public class MyMain{
                 System.out.println("Invalid choice,");
                 return;
         }
-        System.out.println("Updated successfully");
+        System.out.println("Updated successfully.");
     }
 
     private static void deleteEmployee(){
@@ -175,7 +186,7 @@ public class MyMain{
         System.out.println("Employee to delete:");
         System.out.println(emp);
         employees.remove(emp);
-        System.out.println("Employee deleted successfully");
+        System.out.println("Employee deleted successfully.");
         }
     }
 
