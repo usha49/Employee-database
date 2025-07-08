@@ -16,6 +16,7 @@ public class MyMain{
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Management System");
+        System.out.println("-----------------------------------------");
 
         while (true){
             showMenu();
@@ -51,10 +52,12 @@ public class MyMain{
         System.out.println("4. Delete Employee");
         System.out.println("5. Exit");
         System.out.println("Enter your choice (1-5): ");
+        System.out.println("--------------------------------");
     }
 
     public static void getAllEmployees(){
         System.out.println("----All Employees----");
+        System.out.println("-----------------------");
         if (employees.isEmpty()) {
             System.out.println("There are no employees available");
         } else {
@@ -67,32 +70,44 @@ public class MyMain{
     public static void addEmployee(){
         System.out.println("----Add Employee----");
 
-        System.out.print("Enter Employee Id: ");
-        int id  = scanner.nextInt();
-        scanner.nextLine();
+        while (true) {
+            System.out.print("Enter Employee Id: ");
+            int id  = scanner.nextInt();
+            scanner.nextLine();
 
-        // checking whether already exists
-        if (findEmployeeById(id) != null){
-            System.out.println("Employee already exists");
-            return;
+            // checking whether already exists
+            if (findEmployeeById(id) != null){
+                System.out.println("Employee already exists");
+                return;
+            }
+
+            System.out.print("Enter Employee Name: ");
+            String name =scanner.nextLine();
+
+            System.out.print("Enter Employee Address: ");
+            String address =scanner.nextLine();
+
+            System.out.print("Enter Employee Phone Number: ");
+            String phone = scanner.nextLine();
+
+            System.out.print("Enter Employee Position: ");
+            String position = scanner.nextLine();
+
+            Employee newEmployee = new Employee (id, name, address, phone, position);
+            employees.add(newEmployee);
+
+            System.out.println("Employee added successfully");
+            System.out.println("Do you want to add another employee? (y/n): ");
+            String confirm = scanner.nextLine();
+            if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")){
+                return;
+            } else if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")){
+                break;
+            } else {
+                System.out.println("Invalid input, please try again.");
+            }
         }
 
-        System.out.print("Enter Employee Name: ");
-        String name =scanner.nextLine();
-
-        System.out.print("Enter Employee Address: ");
-        String address =scanner.nextLine();
-
-        System.out.print("Enter Employee Phone Number: ");
-        String phone = scanner.nextLine();
-
-        System.out.print("Enter Employee Position: ");
-        String position = scanner.nextLine();
-
-        Employee newEmployee = new Employee (id, name, address, phone, position);
-        employees.add(newEmployee);
-
-        System.out.println("Employee added successfully");
     }
 
     private static void updateEmployee(){
@@ -157,7 +172,8 @@ public class MyMain{
             System.out.println("Employee not found");
             return;
         }
-        System.out.println("Employee to delete:" + emp);
+        System.out.println("Employee to delete:");
+        System.out.println(emp);
         employees.remove(emp);
         System.out.println("Employee deleted successfully");
         }
