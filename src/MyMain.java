@@ -130,7 +130,8 @@ public class MyMain{
 
         Employee emp = findEmployeeById(id);
         if (emp == null){
-            System.out.println("Employee not found");
+            System.out.println("The Employee you are trying to update is not found.");
+            System.out.println("----------------------------------");
             return;
         }
 
@@ -180,7 +181,8 @@ public class MyMain{
 
         Employee emp = findEmployeeById(id);
         if (emp == null){
-            System.out.println("Employee not found");
+            System.out.println("The Employee you are trying to delete is not found.");
+            System.out.println("----------------------------------");
             return;
         }
         System.out.println("Employee to delete:");
