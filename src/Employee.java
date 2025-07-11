@@ -5,14 +5,18 @@ public class Employee{
     private String empAddress;
     private String empPhone;
     private String empPost;
+    private int empAge;
+    private long empSalary;
 
     //constructor
-    public Employee(int empId, String empName, String empAddress, String empPhone, String empPost){
+    public Employee(int empId, String empName, String empAddress, String empPhone, String empPost, int empAge, long empSalary){
         this.empId = empId;
         this.empName = empName;
         this.empAddress = empAddress;
         this.empPhone = empPhone;
         this.empPost = empPost;
+        this.empAge = empAge;
+        this.empSalary = empSalary;
     }
     // Getters
     public String getEmpName(){
@@ -29,6 +33,12 @@ public class Employee{
     }
     public int getEmpId(){
         return empId;
+    }
+    public int getEmpAge(){
+        return empAge;
+    }
+    public long getEmpSalary(){
+        return empSalary;
     }
 
     // setters
@@ -51,6 +61,13 @@ public class Employee{
         this.empPost = empPost;
     }
 
+    public void setEmpAge(int empAge){
+        this.empAge = empAge;
+    }
+    public void setEmpSalary(long empSalary){
+        this.empSalary = empSalary;
+    }
+
     // method to display employee details
     @Override
     public String toString(){
@@ -59,6 +76,8 @@ public class Employee{
                 "\nAddress: " + empAddress +
                 "\nPhone: " + empPhone +
                 "\nPost: " + empPost +
+                "\nAge: " + empAge +
+                "\nSalary: " + empSalary +
                 "\n" + "-".repeat(30);
     }
 }

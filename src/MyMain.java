@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -59,66 +62,90 @@ public class MyMain{
     public static void getAllEmployees(){
         System.out.println("----All Employees----");
         System.out.println("-----------------------");
-        if (employees.isEmpty()) {
-            System.out.println("There are no employees available.");
-            System.out.println("----------------------------------");
-        } else {
-            for (Employee emp : employees){
-                System.out.println(emp);
+        try (Connection conn = new DbFunctions().connect_to_db()){
+            // Getting from postgresSQL
+            String sql = "SELECT * FROM Employee";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.executeUpdate();
+                System.out.println("ALl Employees shown successfully.");
+                System.out.println("------------------------------");
             }
+        } catch (SQLException e){
+            System.err.println("Database error:" + e.getMessage());
         }
     }
 
     public static void addEmployee(){
         System.out.println("----Add Employee----");
+        System.out.println("-----------------------");
 
-        while (true) {
-            int id;
-            while (true){
-                System.out.print("Enter Employee Id: ");
-                id  = scanner.nextInt();
-                scanner.nextLine();
+        try (Connection conn = new DbFunctions().connect_to_db()){
+            // Getting employee details
+            while (true) {
+                int id;
+                while (true) {
+                    System.out.print("Enter Employee Id: ");
+                    id = scanner.nextInt();
+                    scanner.nextLine();
 
-                // checking whether already exists
-                if (findEmployeeById(id) == null){
-                    break;
+                    // checking whether already exists
+                    if (findEmployeeById(id) == null) {
+                        break;
+                    }
+                    System.out.println("Employee already exists. Please try again.");
                 }
-                System.out.println("Employee already exists. Please try again.");
-            }
 
-            System.out.print("Enter Employee Name: ");
-            String name =scanner.nextLine();
+                System.out.print("Enter Employee Name: ");
+                String name = scanner.nextLine();
 
-            System.out.print("Enter Employee Address: ");
-            String address =scanner.nextLine();
+                System.out.print("Enter Employee Address: ");
+                String address = scanner.nextLine();
 
-            System.out.print("Enter Employee Phone Number: ");
-            String phone = scanner.nextLine();
+                System.out.print("Enter Employee Phone Number: ");
+                String phone = scanner.nextLine();
 
-            System.out.print("Enter Employee Position: ");
-            String position = scanner.nextLine();
+                System.out.print("Enter Employee Position: ");
+                String position = scanner.nextLine();
 
-            Employee newEmployee = new Employee (id, name, address, phone, position);
-            employees.add(newEmployee);
+                System.out.println("Enter Employee's Age: ");
+                int age = scanner.nextInt();
 
-            System.out.println("Employee added successfully.");
-            System.out.println("------------------------------");
+                System.out.println("Enter Employee's Salary: ");
+                long salary = scanner.nextLong();
 
-            while(true) {
-                System.out.println("Do you want to add another employee? (y/n): ");
-                String confirm = scanner.nextLine();
-                if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")){
-                    return;
-                } else if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")){
-                    System.out.println("Then you can add new employee.");
-                    break;
-                } else {
-                    System.out.println("Invalid input, please try again.");
+                // Inserting into PostgresSQL
+                String sql = "INSERT INTO Employee(e_id, e_name, e_address, e_phone, e_position, e_age, e_salary)" +
+                        "VALUES (?,?,?,?,?,?,?)";
+
+                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                    stmt.setInt(1, id);
+                    stmt.setString(2, name);
+                    stmt.setString(3, address);
+                    stmt.setString(4, phone);
+                    stmt.setString(5, position);
+                    stmt.setInt(6, age);
+                    stmt.setLong(7, salary);
+                    stmt.executeUpdate();
+                    System.out.println("Employee added successfully.");
+                    System.out.println("------------------------------");
+                }
+
+                while(true) {
+                    System.out.println("Do you want to add another employee? (y/n): ");
+                    String confirm = scanner.nextLine();
+                    if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")){
+                        return;
+                    } else if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")){
+                        System.out.println("Then you can add new employee.");
+                        break;
+                    } else {
+                        System.out.println("Invalid input, please try again.");
+                    }
                 }
             }
-
+        } catch (SQLException e){
+            System.err.println("Database error:" + e.getMessage());
         }
-
     }
 
     private static void updateEmployee(){
