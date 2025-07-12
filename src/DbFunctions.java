@@ -1,7 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager; //manages JDBC driver
-import java.io.IOException;
-import java.io.InputStream; //for reading config file
+import java.io.InputStream; //for reading config-file
 import java.util.Properties; // stores key-value pair
 
 public class DbFunctions {

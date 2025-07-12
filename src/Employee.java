@@ -34,19 +34,17 @@ public class Employee{
     public int getEmpId(){
         return empId;
     }
-    public int getEmpAge(){
-        return empAge;
-    }
-    public long getEmpSalary(){
-        return empSalary;
-    }
+    public int getEmpAge(){ return empAge;}
+    public long getEmpSalary(){ return empSalary;}
 
     // setters
     public void setEmpId(int empId){
+        if (empId < 0) throw new IllegalArgumentException("Employee ID cannot be less than 0");
         this.empId = empId;
     }
 
     public void setEmpName(String empName){
+        if (empName == null) throw new IllegalArgumentException("Name must not be null.");
         this.empName = empName;
     }
 
@@ -54,6 +52,7 @@ public class Employee{
         this.empAddress = empAddress;
     }
     public void setEmpPhone(String empPhone){
+        if (empPhone.length() != 10) throw new IllegalArgumentException("Phone number must be 10 digits");
         this.empPhone = empPhone;
     }
 
@@ -62,6 +61,7 @@ public class Employee{
     }
 
     public void setEmpAge(int empAge){
+        if (empAge < 18) throw new IllegalArgumentException("Age cannot be less than 18");
         this.empAge = empAge;
     }
     public void setEmpSalary(long empSalary){
