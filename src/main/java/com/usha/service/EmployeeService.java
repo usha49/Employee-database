@@ -1,6 +1,9 @@
+package com.usha.service;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
+import com.usha.model.Employee;
+import com.usha.repository.EmployeeRepository;
 
 public class EmployeeService {
     private final Connection conn;

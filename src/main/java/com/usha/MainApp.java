@@ -1,11 +1,16 @@
+package com.usha;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import com.usha.repository.*;
+import com.usha.model.*;
+import com.usha.service.*;
 
-public class MyMain{
+public class MainApp{
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package com.usha.repository;
+
 import java.sql.Connection;
 import java.sql.DriverManager; //manages JDBC driver
 import java.io.InputStream; //for reading config-file

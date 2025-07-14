@@ -1,3 +1,5 @@
+package com.usha.model;
+
 public class Employee{
     // Attributes
     private int empId;

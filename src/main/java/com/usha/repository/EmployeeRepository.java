@@ -1,7 +1,10 @@
+package com.usha.repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.usha.model.Employee;
 
 public class EmployeeRepository {
     // Get all employees from DB
