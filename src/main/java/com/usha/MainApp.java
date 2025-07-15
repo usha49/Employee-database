@@ -14,8 +14,7 @@ public class MainApp{
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        try {
-            Connection conn = DbFunctions.connect_to_db();
+        try (Connection conn = DbFunctions.connect_to_db()){
             EmployeeService service = new EmployeeService(conn);
             System.out.println("Welcome to Employee Management System");
 
@@ -47,7 +46,6 @@ public class MainApp{
         } catch (Exception e){
             System.err.println("Error:" + e.getMessage());
         }
-
     }
 
     public static void showMenu(){

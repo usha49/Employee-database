@@ -25,6 +25,9 @@ public class EmployeeService {
         if (doesEmployeeExist(emp.getEmpId())) {
             throw new IllegalArgumentException("Employee ID already exists.");
         }
+        if (phoneExists(emp.getEmpPhone())) {
+            throw new IllegalStateException("Phone number already in use");
+        }
         EmployeeRepository.addEmployee(conn, emp);
     }
 
@@ -42,8 +45,13 @@ public class EmployeeService {
     public boolean doesEmployeeExist(int empId) throws SQLException {
         return EmployeeRepository.existsById(conn, empId);
     }
+    public boolean phoneExists(String phone) throws SQLException {
+        return EmployeeRepository.phoneExists(conn, phone);
+    }
 
     public Employee getEmployeeById(int empId) throws SQLException {
         return EmployeeRepository.getEmployeeById(conn, empId);
     }
+
+
 }

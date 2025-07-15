@@ -107,4 +107,14 @@ public class EmployeeRepository {
         }
         return null;  // if not found
     }
+
+    public static boolean phoneExists(Connection conn, String phone) throws SQLException {
+        String sql = "SELECT 1 FROM Employee WHERE e_phone = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, phone);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next(); // returns 'true' if phone exists
+            }
+        }
+    }
 }
