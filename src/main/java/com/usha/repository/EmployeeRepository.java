@@ -32,7 +32,8 @@ public class EmployeeRepository {
 
     // Add other DB methods (add, update, delete)
     public static void addEmployee(Connection conn, Employee emp) throws SQLException {
-        String sql = "INSERT INTO Employee (...) VALUES (?, ?, ...)";
+        String sql = "INSERT INTO Employee (e_id, e_name, e_address, e_phone, e_position, e_age, e_salary) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, emp.getEmpId());
             stmt.setString(2, emp.getEmpName());
