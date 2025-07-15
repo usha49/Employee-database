@@ -1,0 +1,17 @@
+## maven specific
+target/
+pom.xml
+
+## java specific
+*.class
+*.jar
+*.war
+
+# intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+*.properties
