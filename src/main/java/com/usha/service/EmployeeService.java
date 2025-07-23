@@ -1,57 +1,50 @@
 package com.usha.service;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Map;
+
 import com.usha.model.Employee;
 import com.usha.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class EmployeeService {
-    private final Connection conn;
-
-    public EmployeeService(Connection conn) {
-        this.conn = conn;
-    }
+    @Autowired
+    private EmployeeRepository repo; // Injected by spring
 
     // Business logic: Get all employees and apply filters
-    public ArrayList<Employee> getAllEmployees() throws SQLException {
-        return EmployeeRepository.getAllEmployees(conn);
+    public List<Employee> getAllEmployees() {
+        return repo.findAll();
     }
 
     // Business logic: Add employee with validation
-    public void addEmployee(Employee emp) throws SQLException {
+    public Employee addEmployee(Employee emp) {
         if (emp.getEmpAge() < 18) {
             throw new IllegalArgumentException("Employee must be 18+ years old.");
         }
-        if (doesEmployeeExist(emp.getEmpId())) {
+        if (repo.existsById(emp.getEmpId())) {
             throw new IllegalArgumentException("Employee ID already exists.");
         }
-        if (phoneExists(emp.getEmpPhone())) {
+        if (repo.existsByEmpPhone(emp.getEmpPhone())) {
             throw new IllegalStateException("Phone number already in use");
         }
-        EmployeeRepository.addEmployee(conn, emp);
+        return repo.save(emp); //Auto-converted to Insert
     }
 
-    public void updateEmployee(int empId, Map<String, Object> updates) throws SQLException {
-        if (updates == null || updates.isEmpty()) {
-            throw new IllegalArgumentException("No updates provided.");
+    public Employee updateEmployee(int empId, Employee employee) {
+        if (!repo.existsById(empId)) {
+            throw new IllegalArgumentException("Employee not found.");
         }
-        EmployeeRepository.updateEmployee(conn, empId, updates);
+        employee.setEmpId(empId);
+        return repo.save(employee);
     }
 
-    public void deleteEmployee(int empId) throws SQLException {
-        EmployeeRepository.deleteEmployee(conn,empId);
+    public void deleteEmployee(int empId){
+        repo.deleteById(empId);
     }
 
-    public boolean doesEmployeeExist(int empId) throws SQLException {
-        return EmployeeRepository.existsById(conn, empId);
+    public Employee getEmployeeById(int empId){
+        return repo.findById(empId).orElseThrow(()-> new IllegalArgumentException("Employee not found."));
     }
-    public boolean phoneExists(String phone) throws SQLException {
-        return EmployeeRepository.phoneExists(conn, phone);
-    }
-
-    public Employee getEmployeeById(int empId) throws SQLException {
-        return EmployeeRepository.getEmployeeById(conn, empId);
-    }
-
 
 }

@@ -1,12 +1,11 @@
 package com.usha.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table (name = "employee")
+@Table(name = "employee")
+@NoArgsConstructor  // for no argument constructor
 public class Employee{
     // Attributes
     @Id
