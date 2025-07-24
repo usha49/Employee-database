@@ -19,8 +19,8 @@ public class Employee{
     private long empSalary;
 
     //constructor
-    public Employee(int empId, String empName, String empAddress, String empPhone, String empPost, int empAge, long empSalary){
-        this.empId = empId;
+    public Employee(String empName, String empAddress, String empPhone, String empPost, int empAge, long empSalary){
+        // Let ID be auto-generated
         this.empName = empName;
         this.empAddress = empAddress;
         this.empPhone = empPhone;
