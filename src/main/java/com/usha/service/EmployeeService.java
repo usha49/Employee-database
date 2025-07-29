@@ -19,6 +19,15 @@ public class EmployeeService {
 
     // Business logic: Add employee with validation
     public Employee addEmployee(Employee emp) {
+        // Creating a New object instead of merging
+        Employee newEmp = new Employee();
+        newEmp.setEmpName(emp.getEmpName());
+        newEmp.setEmpAddress(emp.getEmpAddress());
+        newEmp.setEmpPhone(emp.getEmpPhone());
+        newEmp.setEmpPost(emp.getEmpPost());
+        newEmp.setEmpAge(emp.getEmpAge());
+        newEmp.setEmpSalary(emp.getEmpSalary());
+
         if (emp.getEmpAge() < 18) {
             throw new IllegalArgumentException("Employee must be 18+ years old.");
         }
@@ -28,7 +37,7 @@ public class EmployeeService {
         if (repo.existsByEmpPhone(emp.getEmpPhone())) {
             throw new IllegalStateException("Phone number already in use");
         }
-        return repo.save(emp); //Auto-converted to Insert
+        return repo.save(newEmp); //Auto-converted to Insert
     }
 
     public Employee updateEmployee(int empId, Employee employee) {
@@ -36,6 +45,13 @@ public class EmployeeService {
             throw new IllegalArgumentException("Employee not found.");
         }
         employee.setEmpId(empId);
+        employee.setEmpName(employee.getEmpName());
+        employee.setEmpAddress(employee.getEmpAddress());
+        employee.setEmpPhone(employee.getEmpPhone());
+        employee.setEmpPost(employee.getEmpPost());
+        employee.setEmpAge(employee.getEmpAge());
+        employee.setEmpSalary(employee.getEmpSalary());
+
         return repo.save(employee);
     }
 

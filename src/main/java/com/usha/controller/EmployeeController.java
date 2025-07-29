@@ -3,6 +3,7 @@ package com.usha.controller;
 import com.usha.model.Employee;
 import com.usha.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -25,8 +26,12 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable int id, @RequestBody Employee employee){
-        return service.updateEmployee(id, employee);
+    public ResponseEntity<Employee> updateEmployee(
+            @PathVariable int id,
+            @RequestBody Employee employeeDetails) {
+
+        Employee updatedEmployee = service.updateEmployee(id, employeeDetails);
+        return ResponseEntity.ok(updatedEmployee);
     }
 
     @DeleteMapping("/{id}")
